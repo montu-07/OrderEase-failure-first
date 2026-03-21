@@ -3,6 +3,7 @@ import {
   Inject,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { AddToCartDto, UpdateCartItemDto } from '@orderease/shared-contracts';
 import {
@@ -16,25 +17,103 @@ import {
 import { FoodDomainError } from '@orderease/shared-contracts';
 import { CartDomainError } from '@orderease/shared-contracts';
 import { centsToDisplay } from '@orderease/shared-utils';
+import { RedisService } from './redis.service';
+import {
+  RedisCart,
+  RedisCartItem,
+  mapDbCartToRedisCart,
+  mapRedisCartToDbCartItems,
+  getCartRedisKey,
+  isRedisCartEmpty,
+  addItemInRedisCart,
+  updateItemInRedisCart,
+  removeItemFromRedisCart,
+  clearRedisCart,
+} from './cart-transformers';
 
 @Injectable()
 export class CartService {
+  private readonly logger = new Logger(CartService.name);
+
   constructor(
     @Inject(CART_REPOSITORY)
     private cartRepository: ICartRepository,
     @Inject(FOOD_REPOSITORY)
     private foodRepository: IFoodRepository,
+    private readonly redisService: RedisService,
   ) {}
 
   /**
    * Get or create user's cart with items
+   * Hybrid implementation: Try Redis first, fallback to DB
    */
   async getCart(userId: string) {
+    const redisKey = getCartRedisKey(userId);
+    
+    // Step 1: Try Redis first
+    if (this.redisService.isAvailable()) {
+      try {
+        const redisCart = await this.redisService.get(redisKey);
+        
+        if (redisCart && !isRedisCartEmpty(redisCart)) {
+          this.logger.debug(`Cart cache hit for user ${userId}`);
+          
+          // Transform Redis cart to expected format
+          const totalPriceCents = redisCart.items.reduce((sum, item) => {
+            return sum + item.price * item.quantity;
+          }, 0);
+
+          return {
+            id: redisCart.cartId || 'redis-cart', // Use real cart ID from Redis
+            userId,
+            items: redisCart.items.map((item) => ({
+              foodId: item.foodId,
+              quantity: item.quantity,
+              food: {
+                id: item.foodId,
+                name: item.name,
+                price: centsToDisplay(item.price),
+                description: '',
+                imageUrl: '',
+                isAvailable: true,
+                category: '',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              },
+            })),
+            totalPrice: centsToDisplay(totalPriceCents),
+            itemCount: redisCart.items.length,
+            createdAt: new Date(redisCart.updatedAt),
+            updatedAt: new Date(redisCart.updatedAt),
+          };
+        }
+      } catch (error) {
+        this.logger.warn(`Redis read failed for user ${userId}, falling back to DB`, error);
+      }
+    }
+
+    // Step 2: Redis MISS or Redis unavailable - fetch from DB
+    this.logger.debug(`Cart cache miss for user ${userId}, fetching from DB`);
     const cartData = await this.cartRepository.findByUserIdWithDetails(userId);
 
     if (!cartData) {
       // Create empty cart
       const cart = await this.cartRepository.getOrCreate(userId);
+      
+      // Cache empty cart in Redis
+      if (this.redisService.isAvailable()) {
+        try {
+          const emptyRedisCart: RedisCart = {
+            cartId: cart.id || 'empty-cart', // Store real cart ID or placeholder
+            items: [],
+            updatedAt: new Date().toISOString(),
+          };
+          await this.redisService.set(redisKey, emptyRedisCart);
+        } catch (error) {
+          this.logger.warn(`Failed to cache empty cart for user ${userId}`, error);
+        }
+      }
+
       return {
         ...cart,
         totalPrice: 0,
@@ -51,7 +130,7 @@ export class CartService {
       return sum + (food?.price || 0) * item.quantity;
     }, 0);
 
-    return {
+    const result = {
       id: cart.id,
       userId: cart.userId,
       items: cart.items.map((item) => {
@@ -70,13 +149,36 @@ export class CartService {
       createdAt: cart.createdAt,
       updatedAt: cart.updatedAt,
     };
+
+    // Step 3: Hydrate Redis with DB data
+    if (this.redisService.isAvailable()) {
+      try {
+        const redisCart = mapDbCartToRedisCart({
+          id: cart.id || '',
+          userId: cart.userId || '',
+          createdAt: cart.createdAt || new Date(),
+          updatedAt: cart.updatedAt || new Date(),
+          items: cart.items || [],
+        });
+        if (redisCart) {
+          await this.redisService.set(redisKey, redisCart);
+          this.logger.debug(`Cached cart for user ${userId} in Redis`);
+        }
+      } catch (error) {
+        this.logger.warn(`Failed to cache cart for user ${userId}`, error);
+      }
+    }
+
+    return result;
   }
 
   /**
    * Add item to cart or update quantity if exists
+   * Hybrid implementation: Update Redis first, then DB
    */
   async addToCart(userId: string, addToCartDto: AddToCartDto) {
     const { foodId, quantity } = addToCartDto;
+    const redisKey = getCartRedisKey(userId);
 
     try {
       // Check if food exists and is available
@@ -90,7 +192,29 @@ export class CartService {
         throw FoodDomainError.unavailable();
       }
 
-      // Add or update item in cart
+      // Step 1: Update Redis first
+      if (this.redisService.isAvailable()) {
+        try {
+          let redisCart = await this.redisService.get(redisKey);
+          
+          // Add item to Redis cart
+          redisCart = addItemInRedisCart(
+            redisCart,
+            foodId,
+            food.name,
+            food.price,
+            quantity,
+          );
+
+          // Set in Redis with TTL
+          await this.redisService.set(redisKey, redisCart);
+          this.logger.debug(`Updated Redis cart for user ${userId} - added item ${foodId}`);
+        } catch (error) {
+          this.logger.warn(`Failed to update Redis cart for user ${userId}`, error);
+        }
+      }
+
+      // Step 2: Update DB (existing logic for compatibility)
       await this.cartRepository.addOrUpdateItem(userId, foodId, quantity);
 
       return this.getCart(userId);
@@ -109,6 +233,7 @@ export class CartService {
 
   /**
    * Update cart item quantity
+   * Hybrid implementation: Update Redis first, then DB
    */
   async updateCartItem(
     userId: string,
@@ -116,6 +241,7 @@ export class CartService {
     updateCartItemDto: UpdateCartItemDto,
   ) {
     const { quantity } = updateCartItemDto;
+    const redisKey = getCartRedisKey(userId);
 
     try {
       // Get cart
@@ -141,7 +267,25 @@ export class CartService {
         throw CartDomainError.itemNotFound();
       }
 
-      // Update quantity (or delete if 0)
+      // Step 1: Update Redis first
+      if (this.redisService.isAvailable()) {
+        try {
+          let redisCart = await this.redisService.get(redisKey);
+          
+          if (redisCart) {
+            // Update item in Redis cart
+            redisCart = updateItemInRedisCart(redisCart, cartItem.foodId, quantity);
+            
+            // Set in Redis with TTL
+            await this.redisService.set(redisKey, redisCart);
+            this.logger.debug(`Updated Redis cart for user ${userId} - updated item ${cartItem.foodId}`);
+          }
+        } catch (error) {
+          this.logger.warn(`Failed to update Redis cart for user ${userId}`, error);
+        }
+      }
+
+      // Step 2: Update DB (existing logic for compatibility)
       await this.cartRepository.updateItemQuantity(userId, itemId, quantity);
 
       return this.getCart(userId);
@@ -155,8 +299,11 @@ export class CartService {
 
   /**
    * Remove item from cart
+   * Hybrid implementation: Update Redis first, then DB
    */
   async removeFromCart(userId: string, itemId: string) {
+    const redisKey = getCartRedisKey(userId);
+
     try {
       // Get cart
       const cart = await this.cartRepository.findByUserId(userId);
@@ -181,6 +328,25 @@ export class CartService {
         throw CartDomainError.itemNotFound();
       }
 
+      // Step 1: Update Redis first
+      if (this.redisService.isAvailable()) {
+        try {
+          let redisCart = await this.redisService.get(redisKey);
+          
+          if (redisCart) {
+            // Remove item from Redis cart
+            redisCart = removeItemFromRedisCart(redisCart, cartItem.foodId);
+            
+            // Set in Redis with TTL
+            await this.redisService.set(redisKey, redisCart);
+            this.logger.debug(`Updated Redis cart for user ${userId} - removed item ${cartItem.foodId}`);
+          }
+        } catch (error) {
+          this.logger.warn(`Failed to update Redis cart for user ${userId}`, error);
+        }
+      }
+
+      // Step 2: Update DB (existing logic for compatibility)
       await this.cartRepository.removeItem(userId, itemId);
 
       return this.getCart(userId);
@@ -194,14 +360,28 @@ export class CartService {
 
   /**
    * Clear all items from cart
+   * Hybrid implementation: Clear Redis first, then DB
    */
   async clearCart(userId: string) {
+    const redisKey = getCartRedisKey(userId);
+
     const cart = await this.cartRepository.findByUserId(userId);
 
     if (!cart) {
       throw new NotFoundException('Cart not found');
     }
 
+    // Step 1: Clear Redis first
+    if (this.redisService.isAvailable()) {
+      try {
+        await this.redisService.del(redisKey);
+        this.logger.debug(`Cleared Redis cart for user ${userId}`);
+      } catch (error) {
+        this.logger.warn(`Failed to clear Redis cart for user ${userId}`, error);
+      }
+    }
+
+    // Step 2: Clear DB (existing logic for compatibility)
     await this.cartRepository.clearCart(userId);
 
     return this.getCart(userId);
