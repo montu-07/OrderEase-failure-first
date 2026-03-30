@@ -12,7 +12,7 @@ import { FoodModule } from './food';
 import { OrderModule } from './order';
 import { PaymentModule } from './payment';
 import { CartModule } from './cart';
-import { CartSyncModule } from './cart-sync/cart-sync.module';
+import { CartSyncModule } from './cart-sync';
 import { HealthModule } from './health';
 import { appConfig, databaseConfig, jwtConfig } from '@orderease/shared-config';
 import { AppLoggerService, RequestContextMiddleware } from './gateway';
