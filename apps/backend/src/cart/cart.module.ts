@@ -19,6 +19,6 @@ import { FoodModule } from '../food/food.module';
       useClass: PrismaCartRepository,
     },
   ],
-  exports: [CartService, CART_REPOSITORY],
+  exports: [CartService, RedisService, CART_REPOSITORY],
 })
 export class CartModule {}

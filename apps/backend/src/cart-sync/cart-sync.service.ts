@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@orderease/shared-database';
 import { RedisService } from '../cart/redis.service';
 import { getCartRedisKey } from '../cart/cart-transformers';
+import { mapRedisCartToDb, DbCart, DbCartItem, getCartVersion, safeRemoveDirtyFlag } from '@orderease/shared-contracts';
 
 @Injectable()
 export class CartSyncService {
@@ -49,6 +50,7 @@ export class CartSyncService {
 
   /**
    * Sync a single user's cart from Redis to PostgreSQL
+   * Race-condition safe using version checking
    */
   private async syncCartForUser(userId: string): Promise<boolean> {
     try {
@@ -66,10 +68,18 @@ export class CartSyncService {
         return true;
       }
 
-      // Transform Redis cart to DB format
-      const dbCartData = this.mapRedisCartToDb(redisCart, userId);
+      // Step 1: Get cart version BEFORE sync
+      const beforeVersion = await getCartVersion(userId, this.redisService);
 
-      // Sync to database with transaction
+      if (beforeVersion === null) {
+        this.logger.warn(`Failed to get cart version for user ${userId}, skipping sync`);
+        return false;
+      }
+
+      // Step 2: Transform Redis cart to DB format
+      const dbCartData = mapRedisCartToDb(redisCart, userId);
+
+      // Step 3: Sync to database with transaction
       await this.prisma.$transaction(async (tx) => {
         // Upsert cart
         await tx.cart.upsert({
@@ -78,10 +88,10 @@ export class CartSyncService {
             updatedAt: new Date(),
           },
           create: {
-            id: redisCart.cartId || undefined,
+            id: dbCartData.cart.id,
             userId,
-            createdAt: new Date(redisCart.updatedAt),
-            updatedAt: new Date(redisCart.updatedAt),
+            createdAt: dbCartData.cart.createdAt,
+            updatedAt: dbCartData.cart.updatedAt,
           },
         });
 
@@ -97,6 +107,15 @@ export class CartSyncService {
           });
         }
       });
+
+      // Step 4: Safe dirty flag removal
+      const result = await safeRemoveDirtyFlag(userId, beforeVersion, this.redisService);
+      
+      if (result.removed) {
+        this.logger.debug(`Successfully synced cart for user ${userId}, dirty flag removed: ${result.reason}`);
+      } else {
+        this.logger.warn(`Cart sync completed for user ${userId}, but dirty flag NOT removed: ${result.reason}`);
+      }
 
       this.logger.debug(`Successfully synced cart for user ${userId}`);
       return true;
@@ -127,28 +146,5 @@ export class CartSyncService {
         where: { cart: { userId } },
       });
     });
-  }
-
-  /**
-   * Transform Redis cart to DB format
-   */
-  private mapRedisCartToDb(redisCart: any, userId: string): {
-    cart: any;
-    items: any[];
-  } {
-    const cart = {
-      id: redisCart.cartId || undefined,
-      userId,
-      createdAt: new Date(redisCart.updatedAt),
-      updatedAt: new Date(redisCart.updatedAt),
-    };
-
-    const items = redisCart.items.map((item: any) => ({
-      foodId: item.foodId,
-      quantity: item.quantity,
-      price: item.price, // Store price in cents
-    }));
-
-    return { cart, items };
   }
 }
