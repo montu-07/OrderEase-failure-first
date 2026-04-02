@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # -----------------------
+  # Redis (Cache Layer)
+  # -----------------------
+  redis:
+    image: redis:7-alpine
+    container_name: orderease-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - orderease-network
+
+  # -----------------------
+  # Zookeeper (Kafka dependency)
+  # -----------------------
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: orderease-zookeeper
+    restart: unless-stopped
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - orderease-network
+
+  # -----------------------
+  # Kafka
+  # -----------------------
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: orderease-kafka
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      # IMPORTANT for local access
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - orderease-network
+
+  # -----------------------
+  # Kafka UI (Debugging)
+  # -----------------------
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: orderease-kafka-ui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    networks:
+      - orderease-network
+
+# -----------------------
+# Network
+# -----------------------
+networks:
+  orderease-network:
+    driver: bridge
+
+# -----------------------
+# Volumes
+# -----------------------
+volumes:
+  redis_data:
