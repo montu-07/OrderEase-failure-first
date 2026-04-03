@@ -1,8 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@orderease/shared-database';
-import { RedisService } from '../cart/redis.service';
-import { getCartRedisKey } from '../cart/cart-transformers';
 import { mapRedisCartToDb, DbCart, DbCartItem, getCartVersion, safeRemoveDirtyFlag } from '@orderease/shared-contracts';
+import { RedisService } from '../infrastructure/redis/redis.service';
 
 @Injectable()
 export class CartSyncService {
@@ -54,7 +53,7 @@ export class CartSyncService {
    */
   private async syncCartForUser(userId: string): Promise<boolean> {
     try {
-      const redisKey = getCartRedisKey(userId);
+      const redisKey = `cart:${userId}`; // Inline key generation
       const redisCart = await this.redisService.get(redisKey);
 
       if (!redisCart) {

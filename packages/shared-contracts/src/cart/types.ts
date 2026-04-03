@@ -6,7 +6,6 @@
 export interface RedisCartItem {
   foodId: string;
   quantity: number;
-  price: number; // Price in cents (integer)
 }
 
 export interface RedisCart {
@@ -18,7 +17,6 @@ export interface RedisCart {
 export interface CartMutation {
   foodId: string;
   quantity: number;
-  price?: number; // Price in cents (integer)
 }
 
 /**
@@ -55,18 +53,12 @@ export function validateRedisCart(redisCart: unknown): redisCart is RedisCart {
     const cartItem = item as Record<string, unknown>;
     
     if (typeof cartItem.foodId !== 'string' ||
-        typeof cartItem.quantity !== 'number' ||
-        typeof cartItem.price !== 'number') {
+        typeof cartItem.quantity !== 'number') {
       return false;
     }
     
     // Validate quantity is positive integer
     if (!Number.isInteger(cartItem.quantity) || cartItem.quantity <= 0) {
-      return false;
-    }
-    
-    // Validate price is non-negative integer
-    if (!Number.isInteger(cartItem.price) || cartItem.price < 0) {
       return false;
     }
   }

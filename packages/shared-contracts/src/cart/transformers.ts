@@ -16,7 +16,6 @@ export interface DbCart {
 export interface DbCartItem {
   foodId: string;
   quantity: number;
-  price: number; // Price in cents (integer)
   cartId: string;
 }
 
@@ -49,11 +48,11 @@ export function mapRedisCartToDb(
   };
 
   // Transform cart items
-  const items: DbCartItem[] = redisCart.items.map((item) => ({
-    foodId: item.foodId,
-    quantity: item.quantity,
-    price: item.price, // Price in cents (integer)
+  const items: DbCartItem[] = redisCart.items.map(({ foodId, quantity }) => ({
+    foodId,
+    quantity,
     cartId: redisCart.cartId!, // Non-null assertion validated above
+    // Explicitly exclude price field - CartItem table doesn't have it
   }));
 
   return { cart, items };
@@ -70,7 +69,6 @@ export function mapDbCartToRedis(
     items: Array<{
       foodId: string;
       quantity: number;
-      price: number;
     }>;
     createdAt: Date;
     updatedAt: Date;
@@ -95,7 +93,6 @@ export function mapDbCartToRedis(
     items: dbCart.items.map((item) => ({
       foodId: item.foodId,
       quantity: item.quantity,
-      price: item.price, // Price in cents (integer)
     })),
     updatedAt: dbCart.updatedAt.getTime(), // Unix timestamp
   };
@@ -133,7 +130,6 @@ export function mutationsToRedisCart(
     items: mutations.map((mutation) => ({
       foodId: mutation.foodId,
       quantity: mutation.quantity,
-      price: mutation.price || 0, // Default to 0 if not specified
     })),
     updatedAt: Date.now(), // Current timestamp
   };
@@ -160,7 +156,6 @@ export function redisCartToMutations(redisCart: RedisCart): CartMutation[] {
   return redisCart.items.map((item): CartMutation => ({
     foodId: item.foodId,
     quantity: item.quantity,
-    price: item.price,
   }));
 }
 

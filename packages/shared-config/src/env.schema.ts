@@ -75,6 +75,32 @@ export const envSchema = z.object({
 
   // CORS Configuration
   CORS_ORIGIN: z.string().default('http://localhost:3001'),
+
+  // Redis Configuration
+  REDIS_HOST: z.string().default('localhost'),
+  REDIS_PORT: z
+    .string()
+    .default('6379')
+    .transform((val) => parseInt(val, 10))
+    .refine((val) => val > 0 && val < 65536, {
+      message: 'REDIS_PORT must be between 1 and 65535',
+    }),
+  REDIS_PASSWORD: z.string().optional(),
+
+  // Kafka Configuration
+  KAFKA_CLIENT_ID: z.string().default('orderease-backend'),
+  KAFKA_BROKERS: z
+    .string()
+    .default('localhost:9092')
+    .transform((val) => val.split(',').map(broker => broker.trim())),
+  KAFKA_CONSUMER_GROUP_ID: z.string().default('orderease-consumer-group'),
+  KAFKA_SSL: z
+    .string()
+    .default('false')
+    .transform((val) => val === 'true'),
+  KAFKA_SASL_MECHANISM: z.string().optional(),
+  KAFKA_SASL_USERNAME: z.string().optional(),
+  KAFKA_SASL_PASSWORD: z.string().optional(),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;

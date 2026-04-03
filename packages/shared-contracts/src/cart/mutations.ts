@@ -12,7 +12,6 @@ export function addItemToCart(
   mutations: CartMutation[],
   foodId: string,
   quantity: number,
-  price?: number
 ): CartMutation[] {
   // Validate inputs
   if (quantity <= 0) {
@@ -28,7 +27,6 @@ export function addItemToCart(
     updatedMutations[existingIndex] = {
       ...updatedMutations[existingIndex],
       quantity: updatedMutations[existingIndex].quantity + quantity,
-      price: price ?? updatedMutations[existingIndex].price,
     };
     return updatedMutations;
   } else {
@@ -36,7 +34,6 @@ export function addItemToCart(
     return [...mutations, {
       foodId,
       quantity,
-      price,
     }];
   }
 }
