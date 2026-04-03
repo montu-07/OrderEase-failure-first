@@ -1,0 +1,1240 @@
+{
+  "info": {
+    "_postman_id": "024ee214-883e-4544-a319-c49b308bc0ae",
+    "name": "AI-Escrow-Agent",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "e32efc5c-ba30-4ed1-b78f-23e76c5afbdc",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ankitprajapati10027+101@gmail.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"freelancer\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/signup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "id": "208b30cc-e872-42fa-8252-be76aa3653a5",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ankitprajapati10027+1@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "5fc0e943-1f5e-490f-b25f-4f388edd95f3"
+    },
+    {
+      "name": "project",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "56f184ec-01a6-4c4e-b5ab-5c674b37479b",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NDA0ZTExMC0zYWI3LTQ1ZDUtYjhkNi0zYWJlYWMzNDc4NmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDIwMjY1MiwiZXhwIjoxNzc0ODA3NDUyfQ.0yBm9RKPC337LGzsi6iWGF87NuFTngB7VoKHlCwUn7E",
+                "type": "text",
+                "uuid": "0da2a681-d238-4930-883a-4f82687751ca"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text",
+                "uuid": "1f62b3eb-4683-40d6-81bf-cb9dd4961403"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"ranker rabbit platform\",\r\n    \"client_id\":\"bb36f3c9-524f-4f4b-9c08-de2615a7ab96\",\r\n    \"total_price\": 50000,\r\n    \"timeline_days\": 14,\r\n    \"description\": \"vnkfvnkl\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "e41f85e1-89a8-44cd-8dfe-8a7a29226f8a",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyMTEyMjksImV4cCI6MTc3NDgxNjAyOX0.Q6bLwFRBi13_c9-Lf_7qS6pveIvFU5ki2ZcUuvPD-ew",
+                "type": "text",
+                "uuid": "aba869b2-bf0f-457e-97cd-79d02e5c0725"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "598a5380-1723-4f47-a717-3dc98a68695c",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzM0MDg3MjAsImV4cCI6MTc3NDAxMzUyMH0.YltJP_bgNjWzsajDqcdSijNBusM8Esgt_llrtbQz2Uw",
+                "type": "text",
+                "uuid": "872fcf93-820d-4574-9995-a613fa7aaffb"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/projects/07d4a6e0-69bc-4a99-8c9e-1b19971b241b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "07d4a6e0-69bc-4a99-8c9e-1b19971b241b"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "Bearer ",
+                  "type": "text",
+                  "uuid": "2d03ff60-c0d6-4210-adb2-6679bee2408f",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "d6d02a77-911d-45af-9c9c-184f98994516"
+    },
+    {
+      "name": "clientBrief",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "8692ddf8-49a3-489a-bd75-ca93853b42d5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyMTEyMjksImV4cCI6MTc3NDgxNjAyOX0.Q6bLwFRBi13_c9-Lf_7qS6pveIvFU5ki2ZcUuvPD-ew",
+                "type": "text",
+                "uuid": "1f1d55ed-feb3-4194-b7fb-9e669baae0e6"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"raw_text\": \"Build a SaaS dashboard with authentication and analytics\",\r\n    \"domain\": \"design\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/projects/fcd1153a-7833-43df-9630-47e0c3a26231/brief",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "fcd1153a-7833-43df-9630-47e0c3a26231",
+                "brief"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "43df67cd-ac36-431f-b272-fb4b6209d034",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyMTEyMjksImV4cCI6MTc3NDgxNjAyOX0.Q6bLwFRBi13_c9-Lf_7qS6pveIvFU5ki2ZcUuvPD-ew",
+                "type": "text",
+                "uuid": "d759d166-816d-4e11-8d1a-4a0846517de5"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects/fcd1153a-7833-43df-9630-47e0c3a26231/brief",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "fcd1153a-7833-43df-9630-47e0c3a26231",
+                "brief"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "aa7b8296-af68-4d50-b63b-3c314f3aa5eb"
+    },
+    {
+      "name": "verification_contracts",
+      "item": [
+        {
+          "name": "create contract",
+          "id": "9d44c6bf-152a-422d-968f-567bad7598e1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzM0MDg3MjAsImV4cCI6MTc3NDAxMzUyMH0.YltJP_bgNjWzsajDqcdSijNBusM8Esgt_llrtbQz2Uw",
+                "type": "text",
+                "uuid": "823b72a6-dd4f-4a6f-8faf-3a2b76fab700"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"generated_from_sop_version\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/projects/07d4a6e0-69bc-4a99-8c9e-1b19971b241b/verification-contract",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "07d4a6e0-69bc-4a99-8c9e-1b19971b241b",
+                "verification-contract"
+              ],
+              "query": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzM0MDg3MjAsImV4cCI6MTc3NDAxMzUyMH0.YltJP_bgNjWzsajDqcdSijNBusM8Esgt_llrtbQz2Uw",
+                  "uuid": "91ec7ec4-2aa5-4e05-a52c-252eebdbc8d4",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "approve from client side",
+          "id": "ce72bd13-04af-47ea-b411-0218df48748d",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzM0MDg3MjAsImV4cCI6MTc3NDAxMzUyMH0.YltJP_bgNjWzsajDqcdSijNBusM8Esgt_llrtbQz2Uw",
+                "type": "text",
+                "uuid": "096f6cb4-8f7d-4843-9b86-43c30ad47721"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects/verification-contract/3effc397-54d9-4e3f-9e9b-b2b6830db305/approve-client",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "verification-contract",
+                "3effc397-54d9-4e3f-9e9b-b2b6830db305",
+                "approve-client"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "approve from freelancer side",
+          "id": "93bc33b9-f646-4688-a2b3-919b139b7c24",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODEwMmE2ZS01Yzk5LTQ3MTEtOTFjYS1kODc1MGI3MTA0MmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3MzQyMjQ5OCwiZXhwIjoxNzc0MDI3Mjk4fQ.-wF6Ny6Krvfy3N3VMmkPoOhat5_wBvXoNx07ghWsvsA",
+                "type": "text",
+                "uuid": "7cd4cdf2-726b-4ed2-8817-d527c97085a5"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects/verification-contract/:verification_contract_id/approve-freelancer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "verification-contract",
+                ":verification_contract_id",
+                "approve-freelancer"
+              ],
+              "variable": [
+                {
+                  "key": "verification_contract_id",
+                  "value": "",
+                  "uuid": "eed0923c-e98a-450e-b2e6-34b8761bf5ef"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "lock from any side",
+          "id": "4d43ebe5-9586-4710-b1d8-b9d79ca74fe0",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODEwMmE2ZS01Yzk5LTQ3MTEtOTFjYS1kODc1MGI3MTA0MmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3MzQyMjQ5OCwiZXhwIjoxNzc0MDI3Mjk4fQ.-wF6Ny6Krvfy3N3VMmkPoOhat5_wBvXoNx07ghWsvsA",
+                "type": "text",
+                "uuid": "d34232ae-8291-4d00-acdd-038c9c18564c"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects/verification-contract/3effc397-54d9-4e3f-9e9b-b2b6830db305/lock",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "verification-contract",
+                "3effc397-54d9-4e3f-9e9b-b2b6830db305",
+                "lock"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get by client and assigned freelancer",
+          "id": "b4d17688-32d2-4cbe-8d20-1c08f2102779",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NDA0ZTExMC0zYWI3LTQ1ZDUtYjhkNi0zYWJlYWMzNDc4NmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDIwMjY1MiwiZXhwIjoxNzc0ODA3NDUyfQ.0yBm9RKPC337LGzsi6iWGF87NuFTngB7VoKHlCwUn7E",
+                "type": "text",
+                "uuid": "88ae1c55-eb2d-4c2a-91b8-aba86fd2be29"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/projects/8f958af0-97fc-4aca-95d4-b4b5e4c424bc/verification-contract",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "8f958af0-97fc-4aca-95d4-b4b5e4c424bc",
+                "verification-contract"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "21345df2-0bad-49e6-9370-67372fe477a5"
+    },
+    {
+      "name": "Create client account",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "69ed142e-499c-4138-9b5a-92feb698bcc8",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyMTEyMjksImV4cCI6MTc3NDgxNjAyOX0.Q6bLwFRBi13_c9-Lf_7qS6pveIvFU5ki2ZcUuvPD-ew",
+                "type": "text",
+                "uuid": "0b60c8be-4cd2-44f7-9d28-66399c9d21ed"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ankitprajapati10027+51@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/clients",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "clients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "d1bf9749-fc20-4875-808b-69fdc330dfab",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NDA0ZTExMC0zYWI3LTQ1ZDUtYjhkNi0zYWJlYWMzNDc4NmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDIwMjY1MiwiZXhwIjoxNzc0ODA3NDUyfQ.0yBm9RKPC337LGzsi6iWGF87NuFTngB7VoKHlCwUn7E",
+                "type": "text",
+                "uuid": "61e095c7-462a-41e2-88d2-ef768a48be8c"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/clients",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "clients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "1f8e6589-14c7-4b76-80af-dc38d3a1b220",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODEwMmE2ZS01Yzk5LTQ3MTEtOTFjYS1kODc1MGI3MTA0MmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3MzQyNjQyNywiZXhwIjoxNzc0MDMxMjI3fQ.td4u75QLCAmsMZMVvWo2g4oXCwz0cN23vx2-yimJhjs",
+                "type": "text",
+                "uuid": "8c8df71b-912d-4c17-b8a4-f7fb3a9b6f79"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/clients/26d48d69-3ee2-4aa9-a1a0-e179089e9a54",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "clients",
+                "26d48d69-3ee2-4aa9-a1a0-e179089e9a54"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "f0d5bc7d-8189-44b0-b656-08aa5b74e420"
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "dbc7ff61-2af2-48ec-9c23-6c10b518307b",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQwODEzNTIsImV4cCI6MTc3NDY4NjE1Mn0.zdrTfj_ObIN6n04VKwBf1CEoXxegUijaO9SC5kvwhw0",
+                "type": "text",
+                "uuid": "4a6856e0-865c-4867-8a61-976197d9b0e3"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/payments/projects/07d4a6e0-69bc-4a99-8c9e-1b19971b241b/escrow",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "projects",
+                "07d4a6e0-69bc-4a99-8c9e-1b19971b241b",
+                "escrow"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "175110aa-b865-45c6-b6fa-799d784e4e33",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQwODEzNTIsImV4cCI6MTc3NDY4NjE1Mn0.zdrTfj_ObIN6n04VKwBf1CEoXxegUijaO9SC5kvwhw0",
+                "type": "text",
+                "uuid": "a8f668f2-f530-4282-99a6-9ffb67e8a07d"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"order_id\": \"order_MOCK_JX8SGJ0I\",\r\n    \"payment_id\": \"pay_MOCK_TEST_12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/payments/mock-confirm",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "mock-confirm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "7efdf498-1b02-4fcf-9f3c-fc47d1f1757f",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzM0MDg3MjAsImV4cCI6MTc3NDAxMzUyMH0.YltJP_bgNjWzsajDqcdSijNBusM8Esgt_llrtbQz2Uw",
+                "type": "text",
+                "uuid": "24562b92-b24c-4035-8912-304236984291"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/payments/test/complete-flow",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "test",
+                "complete-flow"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "66b5f4f4-eef2-4e6a-b821-f3ed129a537d",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQwODEzNTIsImV4cCI6MTc3NDY4NjE1Mn0.zdrTfj_ObIN6n04VKwBf1CEoXxegUijaO9SC5kvwhw0",
+                "type": "text",
+                "uuid": "c347b073-c55c-4dde-a83f-115a0aebba3c"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/payments/webhook/verify",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "webhook",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "52865e61-a497-44d9-9423-6455bb06cf73",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQwODEzNTIsImV4cCI6MTc3NDY4NjE1Mn0.zdrTfj_ObIN6n04VKwBf1CEoXxegUijaO9SC5kvwhw0",
+                "type": "text",
+                "uuid": "9bbae5a1-d448-4dbd-bfbe-a148f33e0ee0"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"event_type\": \"payment.captured\",\r\n    \"project_id\": \"07d4a6e0-69bc-4a99-8c9e-1b19971b241b\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/payments/webhook/test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "webhook",
+                "test"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "f3b3bc23-40ab-43b5-89c0-1c75e382727e",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkODkzN2MxYS00MWQ1LTQxYjMtYTFjYS1iYWQ4ODU2NTlmZTUiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQwODEzNTIsImV4cCI6MTc3NDY4NjE1Mn0.zdrTfj_ObIN6n04VKwBf1CEoXxegUijaO9SC5kvwhw0",
+                "type": "text",
+                "uuid": "ad7aec78-3c78-4497-9eae-ae5d913afb40"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"event_type\": \"transfer.processed\",\r\n    \"project_id\": \"07d4a6e0-69bc-4a99-8c9e-1b19971b241b\",\r\n    \"milestone_id\": \"07d4a6e0-69bc-4a99-8c9e-1b19971b241b\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/payments/webhook/test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payments",
+                "webhook",
+                "test"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "fe8a1ddd-1769-4965-8855-61358639c907"
+    },
+    {
+      "name": "sop-AI",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "89f3e5dd-f6ac-49e6-8fc3-cad0486d2884",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text",
+                "uuid": "4516f73c-7126-4a2a-9444-6d0feed260d3"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"project_id\": \"proj_123\",\r\n  \"raw_text\": \"Build escrow system with AI validation\",\r\n  \"domain\": \"backend\",\r\n  \"timeline_days\": 14\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/ai/generate-sop",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "ai",
+                "generate-sop"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a072a7ff-15a9-4e3e-b658-12a95c6d21ab"
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "b987c685-2dc7-4296-b23f-56e2a9d9edb1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyNTgyNjIsImV4cCI6MTc3NDg2MzA2Mn0.4Mu-YwE7N34ckadlJej8QeNSk9VQB5Wbjtfgqc6Wy2Y",
+                "type": "text",
+                "uuid": "5b9fa757-dc85-4a2e-90d9-4bb93a359eb4"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request Copy",
+          "id": "71ec71e3-5bc1-44c6-9bf0-422332029a97",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjM2ZjNjOS01MjRmLTRmNGItOWMwOC1kZTI2MTVhN2FiOTYiLCJyb2xlIjoiZW1wbG95ZXIiLCJpYXQiOjE3NzQyNTgyNjIsImV4cCI6MTc3NDg2MzA2Mn0.4Mu-YwE7N34ckadlJej8QeNSk9VQB5Wbjtfgqc6Wy2Y",
+                "type": "text",
+                "uuid": "bebe283e-349a-4c12-bc06-ee754352d2b5"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"stripe_account_id\": \"acct_1234567890\",\r\n  \"razorpay_account_id\": \"rzp_test_1234567890\", \r\n  \"github_token\": \"ghp_1234567890abcdef\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "407c6db8-837c-437f-a8a2-0c23a0f0222b"
+    },
+    {
+      "name": "sops",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "78263b8c-88d6-4429-acaf-21cf48bb2c5f",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"project_id\": \"07d4a6e0-69bc-4a99-8c9e-1b19971b241b\",\r\n    \"raw_text\": \"Build a SaaS dashboard with authentication and analytics\", \r\n    \"domain\": \"design\",\r\n    \"timeline_days\": 14\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/sops/generate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                "generate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "a636621d-ce37-49c5-838b-2a2cfde7cd91",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text",
+                "uuid": "0bdf2de5-fd9b-4913-bb85-8fb21d4432ed",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/sops/de2377a4-ddaa-4f07-8964-5e4ef87cbe72",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                "de2377a4-ddaa-4f07-8964-5e4ef87cbe72"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "80da2d15-34da-4ac9-b080-dd473d82c055",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sops/project/07d4a6e0-69bc-4a99-8c9e-1b19971b241b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                "project",
+                "07d4a6e0-69bc-4a99-8c9e-1b19971b241b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "4271e36e-8c93-45cf-8c67-c91e9fe66b8d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sops/:sop_id/milestones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                ":sop_id",
+                "milestones"
+              ],
+              "variable": [
+                {
+                  "key": "sop_id",
+                  "value": "de2377a4-ddaa-4f07-8964-5e4ef87cbe72"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "429de6f3-bea6-4657-9d18-4b63df38aa2d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sops/milestones/:milestone_id/checks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                "milestones",
+                ":milestone_id",
+                "checks"
+              ],
+              "variable": [
+                {
+                  "key": "milestone_id",
+                  "value": "bd148c3f-6d94-4003-a1a8-dbc66adf1c17",
+                  "uuid": "1dd1071c-a06e-4931-8019-c37e84e07a00"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "db44aebd-9026-42dc-9022-f375321c39f8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sops/milestones/:milestone_id/checks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sops",
+                "milestones",
+                ":milestone_id",
+                "checks"
+              ],
+              "variable": [
+                {
+                  "key": "milestone_id",
+                  "value": "bd148c3f-6d94-4003-a1a8-dbc66adf1c17"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "c46dd0e4-0710-43af-a907-5d42910be493"
+    },
+    {
+      "name": "aqa-AI",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "d11b5c4c-17ef-4c54-a7cf-d51fe1a50fe2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"request_id\": \"req_12345\",\r\n  \"context\": {\r\n    \"user_id\": \"user_001\",\r\n    \"platform\": \"web\"\r\n  },\r\n  \"payload\": {\r\n    \"submission\": {\r\n      \"submission_id\": \"sub_001\",\r\n      \"project_id\": \"proj_001\",\r\n      \"milestone_id\": \"ms_001\",\r\n      \"type\": \"text\",\r\n      \"content\": \"This is a sample answer\",\r\n      \"metadata\": {\r\n        \"language\": \"en\"\r\n      }\r\n    },\r\n    \"milestone\": {\r\n      \"id\": \"ms_001\",\r\n      \"project_id\": \"proj_001\",\r\n      \"title\": \"Answer Quality Check\",\r\n      \"deadline\": \"2026-03-30T23:59:00Z\",\r\n      \"payment_amount\": 100,\r\n      \"criteria\": \"Check answer quality\",\r\n      \"rules\": {\r\n        \"min_length\": 10,\r\n        \"max_length\": 500\r\n      }\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/ai/run-aqa",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "ai",
+                "run-aqa"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a3dbebcb-43ef-4bef-99cd-a3936b2d7b1d"
+    },
+    {
+      "name": "submission",
+      "item": [
+        {
+          "name": "New Request",
+          "id": "001472b8-27f7-4597-83c8-83e4ea636f89",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODEwMmE2ZS01Yzk5LTQ3MTEtOTFjYS1kODc1MGI3MTA0MmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDI5NTg0MywiZXhwIjoxNzc0OTAwNjQzfQ.UIEMhqFxWr2Z-Or-xItb9NtFTaTcSvEvviM6dK3woKI",
+                "type": "text",
+                "uuid": "be8c39f2-9f64-4a1c-a575-1af6b6bca5f2"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"type\": \"code\",\r\n  \"repo_url\": \"https://github.com/Prajapati-ankit-it/AI-FREELANCE-ESCROW-AGENT\",\r\n  \"content\": \"Implementation of user profile\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/projects/{project_id}/milestones/{milestone_id}/submissions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "projects",
+                "{project_id}",
+                "milestones",
+                "{milestone_id}",
+                "submissions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e83820f0-d6a8-499d-9b29-dd971b70bbbb",
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODEwMmE2ZS01Yzk5LTQ3MTEtOTFjYS1kODc1MGI3MTA0MmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDI5NTg0MywiZXhwIjoxNzc0OTAwNjQzfQ.UIEMhqFxWr2Z-Or-xItb9NtFTaTcSvEvviM6dK3woKI",
+                    "type": "text",
+                    "uuid": "be8c39f2-9f64-4a1c-a575-1af6b6bca5f2"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"type\": \"code\",\r\n  \"repo_url\": \"https://github.com/Prajapati-ankit-it/AI-FREELANCE-ESCROW-AGENT\",\r\n  \"content\": \"Implementation of user profile\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/projects/{project_id}/milestones/{milestone_id}/submissions",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "projects",
+                    "{project_id}",
+                    "milestones",
+                    "{milestone_id}",
+                    "submissions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "338"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"152-CZoL8MqsHEAsAhR9Z52JgnuFls8\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 23 Mar 2026 20:00:34 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-03-24T10:14:47.609Z",
+              "body": "{\n    \"message\": \"Submission created successfully\",\n    \"submission\": {\n        \"submission_id\": \"a3cda4ac-2f55-42f8-80ba-300c3514530a\",\n        \"project_id\": \"07d4a6e0-69bc-4a99-8c9e-1b19971b241b\",\n        \"milestone_id\": \"bd148c3f-6d94-4003-a1a8-dbc66adf1c17\",\n        \"type\": \"code\",\n        \"status\": \"submitted\",\n        \"submitted_at\": \"2026-03-23T20:00:34.000Z\",\n        \"created_at\": \"2026-03-23T20:00:34.000Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "New Request Copy",
+          "id": "28494073-f3d4-4ff4-bb43-686f3f28ec1d",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NDA0ZTExMC0zYWI3LTQ1ZDUtYjhkNi0zYWJlYWMzNDc4NmIiLCJyb2xlIjoiZnJlZWxhbmNlciIsImlhdCI6MTc3NDI5NTM4OSwiZXhwIjoxNzc0OTAwMTg5fQ.jPJcMeJwZGDUk94qF5FQsS1zOP9zuubv9hwLGnQIjcE",
+                "type": "text",
+                "uuid": "be8c39f2-9f64-4a1c-a575-1af6b6bca5f2"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/submissions/a3cda4ac-2f55-42f8-80ba-300c3514530a/run-aqa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "submissions",
+                "a3cda4ac-2f55-42f8-80ba-300c3514530a",
+                "run-aqa"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "85e3abe0-1916-4f8f-b36f-b263ecac8dc8"
+    }
+  ]
+}
