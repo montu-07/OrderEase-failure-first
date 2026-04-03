@@ -1,0 +1,63 @@
+{
+  "info": {
+    "_postman_id": "c9e377b6-ad4a-432c-b65b-bbaebb9d901f",
+    "name": "Astra Search",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "health",
+      "id": "8720930e-58e9-4d8f-ae5f-47134120262c",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request Copy",
+      "id": "22f94dad-4609-4f06-acf3-510c2e28711f",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/search?q=mysql pool connection",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "search"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10",
+              "type": "text",
+              "uuid": "4c1834b6-8ce0-43f8-ad51-47ab66d55454",
+              "disabled": true
+            },
+            {
+              "key": "q",
+              "value": "mysql pool connection",
+              "uuid": "7308ce46-4cb6-44d1-83de-cbb3c2110e60"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
