@@ -25,7 +25,13 @@
       "@orderease/shared-config": ["./packages/shared-config/src"],
       "@orderease/shared-config/*": ["./packages/shared-config/src/*"],
       "@orderease/shared-database": ["./packages/shared-database/src"],
-      "@orderease/shared-database/*": ["./packages/shared-database/src/*"]
+      "@orderease/shared-database/*": ["./packages/shared-database/src/*"],
+      "@orderease/shared": ["./packages/shared/src"],
+      "@orderease/shared/*": ["./packages/shared/src/*"],
+      "@orderease/redis": ["./packages/redis/src"],
+      "@orderease/redis/*": ["./packages/redis/src/*"],
+      "@orderease/kafka": ["./packages/kafka/src"],
+      "@orderease/kafka/*": ["./packages/kafka/src/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

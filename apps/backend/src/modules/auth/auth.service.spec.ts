@@ -8,7 +8,7 @@ import {
   createMockPrismaService,
   createMockJwtService,
   createMockConfigService,
-} from '../test-utils';
+} from '../../test-utils';
 import { Role, MESSAGES } from '@orderease/shared-contracts';
 
 // Mock the utils module
