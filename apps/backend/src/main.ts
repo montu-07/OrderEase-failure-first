@@ -9,7 +9,7 @@ import {
   LoggingInterceptor,
 } from './gateway';
 import { validateEnv } from '@orderease/shared-config';
-import { RefundRecoveryWorker } from './order/application/recovery/refund-recovery-worker';
+import { RefundRecoveryWorker } from './modules/order/application/recovery/refund-recovery-worker';
 
 /**
  * Parse and validate CORS origins from configuration
