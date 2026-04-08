@@ -154,6 +154,150 @@ Worker calls `RefundOrchestrator.initiateRefund()`, which emits `PAYMENT_REFUNDE
 
 ---
 
+## 🛒 Cart System (Fast + Eventually Consistent)
+
+Cart and orders don’t behave the same way.
+
+Orders must be **strictly consistent** because they involve money.
+Carts, on the other hand, need to be **fast and flexible**, while still ending up correct.
+
+---
+
+### ⚡ Core Idea
+
+* **Redis** → handles real-time reads/writes
+* **Kafka** → captures every cart action as an event
+* **Worker** → syncs Redis → Database in batches
+
+```
+User Action → API → Redis (instant)
+                  ↓
+               Kafka event
+                  ↓
+             Cart Worker
+                  ↓
+          Batch DB sync
+```
+
+---
+
+### 🔄 Cart Flow
+
+#### Add / Update Item
+
+* API writes directly to Redis
+* Kafka event is emitted
+* Response is returned immediately
+
+👉 No waiting for DB → instant user experience
+
+---
+
+#### Read Cart
+
+* Always read from Redis
+* Fallback to DB only if needed (rare case)
+
+---
+
+### 🤔 Why Not Direct DB Writes?
+
+Because:
+
+* Users update carts very frequently
+* DB cannot handle high-frequency small writes efficiently
+* It becomes a bottleneck under load
+
+👉 Redis handles speed
+👉 DB handles persistence
+
+---
+
+### ⚙️ Worker Design
+
+The worker is not processing every event blindly.
+
+---
+
+#### 1. Debounce (Prevent Noise)
+
+If user updates rapidly:
+
+```
+update → update → update
+```
+
+👉 Only first event in a short window is processed
+👉 Avoids unnecessary DB writes
+
+---
+
+#### 2. Always Use Latest State
+
+Worker never trusts event payload.
+
+```
+→ fetch latest cart from Redis
+→ sync correct state
+```
+
+👉 Even if events are out of order → data stays correct
+
+---
+
+#### 3. Batch Processing
+
+Instead of:
+
+```
+100 updates → 100 DB writes ❌
+```
+
+We do:
+
+```
+100 updates → 1 batch write ✅
+```
+
+👉 Massive reduction in DB load
+
+---
+
+### 📊 Example
+
+User increases quantity quickly:
+
+```
+1 → 2 → 3
+```
+
+* Redis always has latest value = 3
+* Worker skips intermediate updates
+* DB stores only final state
+
+---
+
+### 🛡️ Failure Handling
+
+#### Worker Crash
+
+* Redis still holds latest cart
+* Worker resumes and syncs later
+
+#### Duplicate Events (Kafka)
+
+* Idempotency prevents double processing
+
+#### Rapid Updates
+
+* Debounce protects DB
+
+#### DB Failure / Delay
+
+* Worker retries in next batch cycle
+
+---
+
 ## 🚀 Running Locally
 
 ### Prerequisites
