@@ -344,5 +344,3 @@ pnpm dev
 - [PORTFOLIO.md](./doc/PORTFOLIO.md) - Project showcase details
 
 ---
-
-Made with ❤️ by TechSign
