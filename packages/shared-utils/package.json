@@ -9,13 +9,18 @@
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist"
   },
-  "keywords": ["orderease", "utils", "utilities"],
+  "keywords": [
+    "orderease",
+    "utils",
+    "utilities"
+  ],
   "author": "TechSign",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^6.0.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0"
+    "@types/bcrypt": "^6.0.0",
+    "typescript": "^6.0.2"
   }
 }
