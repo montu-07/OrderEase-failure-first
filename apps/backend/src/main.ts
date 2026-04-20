@@ -130,6 +130,10 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
   });
+  app.enableCors({
+  origin: ['http://localhost:3000', 'http://localhost:3002'],
+  credentials: true,
+})
 
   // Global validation pipe
   app.useGlobalPipes(
@@ -202,3 +206,5 @@ bootstrap().catch((err: Error) => {
   );
   process.exit(1);
 });
+
+
